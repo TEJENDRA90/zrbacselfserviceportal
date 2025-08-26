@@ -2,103 +2,118 @@
 	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.App"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
-	xmlns:tnt="sap.tnt"
 	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
 	displayBlock="true">
 	
 	<App id="app">
 		<Page id="mainPage" showHeader="false">
 			<content>
-				<tnt:ToolPage id="toolPage" 
-							  sideExpanded="true"
-							  sideContentWidth="300px">
+				<layout:HorizontalLayout width="100%" height="100%">
 					
-					<tnt:sideContent>
-						<tnt:SideNavigation id="sideNavigation" 
-											itemSelect="onNavItemSelect"
-											expanded="true">
-							
-							<!-- Header with Logo and Title -->
-							<tnt:fixedItem>
-								<tnt:NavigationList>
-									<tnt:NavigationListItem 
-										text="Auth Portal"
-										icon="sap-icon://arrow-up"
-										selectable="false"
-										class="sapUiMediumMarginBottom"/>
-								</tnt:NavigationList>
-							</tnt:fixedItem>
-							
-							<!-- Main Navigation Items -->
-							<tnt:item>
-								<tnt:NavigationList>
-									<tnt:NavigationListItem 
-										id="dashboardItem"
+					<!-- Sidebar Navigation -->
+					<VBox width="300px" 
+						  height="100%" 
+						  class="sidebar-container"
+						  alignItems="Stretch">
+						
+						<!-- Header with Logo and Title -->
+						<VBox class="sidebar-header">
+							<HBox alignItems="Center" class="sapUiMediumMargin">
+								<core:Icon src="sap-icon://arrow-up" 
+										   size="2rem" 
+										   color="#0073e6" 
+										   class="sapUiTinyMarginEnd"/>
+								<Text text="Auth Portal" 
+									  class="sapUiLargeFontSize sapUiTextBold"/>
+							</HBox>
+						</VBox>
+						
+						<!-- Navigation Menu -->
+						<ScrollContainer height="100%" 
+										vertical="true" 
+										class="sidebar-nav">
+							<VBox class="sapUiMediumMargin">
+								
+								<!-- Dashboard -->
+								<Button id="dashboardItem"
 										text="Dashboard"
 										icon="sap-icon://home"
-										selectable="true"
-										key="dashboard"/>
-									
-									<tnt:NavigationListItem 
-										id="rolesItem"
+										iconFirst="false"
+										press="onNavItemPress"
+										data-route="dashboard"
+										class="nav-button"
+										type="Transparent"/>
+								
+								<!-- Role Management -->
+								<Button id="rolesItem"
 										text="Role Management"
 										icon="sap-icon://person-placeholder"
-										selectable="true"
-										key="roles"/>
-									
-									<tnt:NavigationListItem 
-										id="assignmentsItem"
+										iconFirst="false"
+										press="onNavItemPress"
+										data-route="roles"
+										class="nav-button"
+										type="Transparent"/>
+								
+								<!-- Default Assignments -->
+								<Button id="assignmentsItem"
 										text="Default Assignments"
 										icon="sap-icon://document-text"
-										selectable="true"
-										key="assignments"/>
-									
-									<tnt:NavigationListItem 
-										id="exceptionsItem"
+										iconFirst="false"
+										press="onNavItemPress"
+										data-route="assignments"
+										class="nav-button"
+										type="Transparent"/>
+								
+								<!-- Exception Handling -->
+								<Button id="exceptionsItem"
 										text="Exception Handling"
 										icon="sap-icon://alert"
-										selectable="true"
-										key="exceptions"/>
-									
-									<tnt:NavigationListItem 
-										id="auditItem"
+										iconFirst="false"
+										press="onNavItemPress"
+										data-route="exceptions"
+										class="nav-button"
+										type="Transparent"/>
+								
+								<!-- Audit Report -->
+								<Button id="auditItem"
 										text="Audit Report"
 										icon="sap-icon://document-text"
-										selectable="true"
-										key="audit"/>
-								</tnt:NavigationList>
-							</tnt:item>
-							
-							<!-- Footer with Theme Switcher and Copyright -->
-							<tnt:fixedItem>
-								<tnt:NavigationList>
-									<tnt:NavigationListItem 
-										text="Switch Theme"
-										icon="sap-icon://lightbulb"
-										selectable="false"
+										iconFirst="false"
+										press="onNavItemPress"
+										data-route="audit"
+										class="nav-button"
+										type="Transparent"/>
+								
+							</VBox>
+						</ScrollContainer>
+						
+						<!-- Footer with Theme Switcher and Copyright -->
+						<VBox class="sidebar-footer">
+							<VBox class="sapUiMediumMargin">
+								<Button text="Switch Theme" 
+										icon="sap-icon://lightbulb" 
 										press="onThemeToggle"
-										data-key="theme-toggle"
-										class="sapUiMediumMarginTop"/>
-									
-									<tnt:NavigationListItem 
-										text="© 2025 VPP Auth Systems"
-										selectable="false"
-										class="sapUiTinyFontSize sapUiTextColorNeutral"/>
-								</tnt:NavigationList>
-							</tnt:fixedItem>
-							
-						</tnt:SideNavigation>
-					</tnt:sideContent>
+										class="theme-button"
+										type="Emphasized"/>
+								
+								<Text text="© 2025 VPP Auth Systems" 
+									  class="copyright-text"/>
+							</VBox>
+						</VBox>
+						
+					</VBox>
 					
-					<tnt:mainContents>
+					<!-- Main Content Area -->
+					<VBox width="100%" height="100%" class="main-content">
 						<Page id="contentPage" showHeader="false">
 							<content>
 								<!-- Content will be loaded here via routing -->
 							</content>
 						</Page>
-					</tnt:mainContents>
+					</VBox>
 					
-				</tnt:ToolPage>
+				</layout:HorizontalLayout>
 			</content>
 		</Page>
 	</App>

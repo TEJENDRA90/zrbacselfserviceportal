@@ -32,12 +32,24 @@ sap.ui.define([
 		},
 
 		_selectNavigationItem: function (sKey) {
-			var oSideNavigation = this.getView().byId("sideNavigation");
-			var oItem = this.getView().byId(sKey + "Item");
+			// Remove selection from all navigation items
+			this._clearNavigationSelection();
 			
+			// Select the current item
+			var oItem = this.getView().byId(sKey + "Item");
 			if (oItem) {
-				oSideNavigation.setSelectedItem(oItem);
+				oItem.addStyleClass("nav-button-selected");
 			}
+		},
+
+		_clearNavigationSelection: function () {
+			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
+			aNavItems.forEach(function(sKey) {
+				var oItem = this.getView().byId(sKey + "Item");
+				if (oItem) {
+					oItem.removeStyleClass("nav-button-selected");
+				}
+			}.bind(this));
 		},
 
 		_initTheme: function () {
@@ -45,14 +57,17 @@ sap.ui.define([
 			sap.ui.getCore().applyTheme(storedTheme);
 		},
 
-		onNavItemSelect: function (oEvent) {
-			var oItem = oEvent.getParameter("item");
-			var sKey = oItem.getKey();
+		onNavItemPress: function (oEvent) {
+			var oButton = oEvent.getSource();
+			var sRoute = oButton.data("route");
 			
-			if (sKey) {
+			if (sRoute) {
+				// Update navigation selection
+				this._selectNavigationItem(sRoute);
+				
 				// Navigate to the selected route
 				var oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo(sKey);
+				oRouter.navTo(sRoute);
 			}
 		},
 
