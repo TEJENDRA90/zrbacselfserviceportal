@@ -7,140 +7,244 @@
 	xmlns:card="sap.f.cards"
 	displayBlock="true">
 	
-	<Page title="RBAC Self-Service Portal" 
-		  showHeader="true" 
-		  class="sapUiResponsiveContentPadding">
-		
+	<Page showHeader="false" class="sapUiNoContentPadding">
 		<content>
-			<VBox class="sapUiMediumMargin">
-				<!-- Welcome Message -->
-				<VBox class="sapUiMediumMarginBottom">
-					<Title text="Welcome!" 
-						   level="H1" 
-						   class="sapUiMediumMarginBottom"/>
-					<Text text="This portal provides a real-time overview and management tools for user access controls." 
-						  class="sapUiMediumFontSize"/>
+			<layout:HorizontalLayout width="100%" height="100vh">
+				
+				<!-- Left Sidebar Navigation -->
+				<VBox width="300px" 
+					  height="100%" 
+					  class="sidebar-container"
+					  alignItems="Stretch">
+					
+					<!-- Header with Logo and Title -->
+					<VBox class="sidebar-header">
+						<HBox alignItems="Center" class="sapUiMediumMargin">
+							<core:Icon src="sap-icon://arrow-up" 
+									   size="2rem" 
+									   color="#0073e6" 
+									   class="sapUiTinyMarginEnd"/>
+							<Text text="Auth Portal" 
+								  class="sapUiLargeFontSize sapUiTextBold"/>
+						</HBox>
+					</VBox>
+					
+					<!-- Navigation Menu -->
+					<ScrollContainer height="100%" 
+									vertical="true" 
+									class="sidebar-nav">
+						<VBox class="sapUiMediumMargin">
+							
+							<!-- Dashboard -->
+							<Button id="dashboardItem"
+									text="Dashboard"
+									icon="sap-icon://home"
+									iconFirst="false"
+									press="onNavItemPress"
+									data-route="dashboard"
+									class="nav-button nav-button-selected"
+									type="Transparent"/>
+							
+							<!-- Role Management -->
+							<Button id="rolesItem"
+									text="Role Management"
+									icon="sap-icon://person-placeholder"
+									iconFirst="false"
+									press="onNavItemPress"
+									data-route="roles"
+									class="nav-button"
+									type="Transparent"/>
+							
+							<!-- Default Assignments -->
+							<Button id="assignmentsItem"
+									text="Default Assignments"
+									icon="sap-icon://document-text"
+									iconFirst="false"
+									press="onNavItemPress"
+									data-route="assignments"
+									class="nav-button"
+									type="Transparent"/>
+							
+							<!-- Exception Handling -->
+							<Button id="exceptionsItem"
+									text="Exception Handling"
+									icon="sap-icon://alert"
+									iconFirst="false"
+									press="onNavItemPress"
+									data-route="exceptions"
+									class="nav-button"
+									type="Transparent"/>
+							
+							<!-- Audit Report -->
+							<Button id="auditItem"
+									text="Audit Report"
+									icon="sap-icon://document-text"
+									iconFirst="false"
+									press="onNavItemPress"
+									data-route="audit"
+									class="nav-button"
+									type="Transparent"/>
+							
+						</VBox>
+					</ScrollContainer>
+					
+					<!-- Footer with Theme Switcher and Copyright -->
+					<VBox class="sidebar-footer">
+						<VBox class="sapUiMediumMargin">
+							<Button text="Switch Theme" 
+									icon="sap-icon://lightbulb" 
+									press="onThemeToggle"
+									class="theme-button"
+									type="Emphasized"/>
+							
+							<Text text="© 2025 VPP Auth Systems" 
+								  class="copyright-text"/>
+						</VBox>
+					</VBox>
+					
 				</VBox>
 				
-				<!-- Statistics Cards -->
-				<layout:Grid defaultSpan="XL3 L3 M6 S12" 
-							class="sapUiMediumMarginBottom">
-					
-					<!-- Defined Roles Card -->
-					<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-								header="Defined Roles"
-								subheader="Manage roles and permissions"
-								press="onRolesPress">
-						<TileContent>
-							<NumericContent value="{/stats/rolesCount}" 
-										   scale=""
-										   valueColor="Good"
-										   indicator="Up"
-										   press="onRolesPress"/>
-						</TileContent>
-					</GenericTile>
-					
-					<!-- Default Assignments Card -->
-					<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-								header="Default Assignments"
-								subheader="Configure automated role assignments"
-								press="onAssignmentsPress">
-						<TileContent>
-							<NumericContent value="{/stats/defaultAssignmentsCount}" 
-										   scale=""
-										   valueColor="Good"
-										   indicator="Up"
-										   press="onAssignmentsPress"/>
-						</TileContent>
-					</GenericTile>
-					
-					<!-- Active Exceptions Card -->
-					<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-								header="Active Exceptions"
-								subheader="Handle manual role assignments"
-								press="onExceptionsPress">
-						<TileContent>
-							<NumericContent value="{/stats/activeExceptionsCount}" 
-										   scale=""
-										   valueColor="Critical"
-										   indicator="Up"
-										   press="onExceptionsPress"/>
-						</TileContent>
-					</GenericTile>
-					
-					<!-- Total Users Card -->
-					<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-								header="Total Users"
-								subheader="Users in the system"
-								press="onUsersPress">
-						<TileContent>
-							<NumericContent value="{/stats/totalUsersCount}" 
-										   scale=""
-										   valueColor="Neutral"
-										   indicator="Up"
-										   press="onUsersPress"/>
-						</TileContent>
-					</GenericTile>
-					
-				</layout:Grid>
+				<!-- Right Main Content Area -->
+				<VBox width="100%" height="100%" class="main-content">
+					<Page title="RBAC Self-Service Portal" 
+						  showHeader="true" 
+						  class="sapUiResponsiveContentPadding">
+						
+						<content>
+							<VBox class="sapUiMediumMargin">
+								<!-- Welcome Message -->
+								<VBox class="sapUiMediumMarginBottom">
+									<Title text="Welcome!" 
+										   level="H1" 
+										   class="sapUiMediumMarginBottom"/>
+									<Text text="This portal provides a real-time overview and management tools for user access controls." 
+										  class="sapUiMediumFontSize"/>
+								</VBox>
+								
+								<!-- Statistics Cards -->
+								<layout:Grid defaultSpan="XL3 L3 M6 S12" 
+											class="sapUiMediumMarginBottom">
+									
+									<!-- Defined Roles Card -->
+									<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+												header="Defined Roles"
+												subheader="Manage roles and permissions"
+												press="onRolesPress">
+										<TileContent>
+											<NumericContent value="{/stats/rolesCount}" 
+														   scale=""
+														   valueColor="Good"
+														   indicator="Up"
+														   press="onRolesPress"/>
+										</TileContent>
+									</GenericTile>
+									
+									<!-- Default Assignments Card -->
+									<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+												header="Default Assignments"
+												subheader="Configure automated role assignments"
+												press="onAssignmentsPress">
+										<TileContent>
+											<NumericContent value="{/stats/defaultAssignmentsCount}" 
+														   scale=""
+														   valueColor="Good"
+														   indicator="Up"
+														   press="onAssignmentsPress"/>
+										</TileContent>
+									</GenericTile>
+									
+									<!-- Active Exceptions Card -->
+									<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+												header="Active Exceptions"
+												subheader="Handle manual role assignments"
+												press="onExceptionsPress">
+										<TileContent>
+											<NumericContent value="{/stats/activeExceptionsCount}" 
+														   scale=""
+														   valueColor="Critical"
+														   indicator="Up"
+														   press="onExceptionsPress"/>
+										</TileContent>
+									</GenericTile>
+									
+									<!-- Total Users Card -->
+									<GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+												header="Total Users"
+												subheader="Users in the system"
+												press="onUsersPress">
+										<TileContent>
+											<NumericContent value="{/stats/totalUsersCount}" 
+														   scale=""
+														   valueColor="Neutral"
+														   indicator="Up"
+														   press="onUsersPress"/>
+										</TileContent>
+									</GenericTile>
+									
+								</layout:Grid>
+								
+								<!-- Quick Actions -->
+								<Panel headerText="Quick Actions" 
+									   class="sapUiMediumMarginTop">
+									<content>
+										<layout:Grid defaultSpan="XL4 L4 M6 S12" 
+													class="sapUiMediumMarginBottom">
+											
+											<Button text="Create New Role" 
+													icon="sap-icon://add" 
+													press="onCreateRolePress"
+													class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+													type="Emphasized"/>
+											
+											<Button text="Add Assignment Rule" 
+													icon="sap-icon://rule" 
+													press="onAddAssignmentRulePress"
+													class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+													type="Emphasized"/>
+											
+											<Button text="Generate Audit Report" 
+													icon="sap-icon://document" 
+													press="onGenerateAuditReportPress"
+													class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
+													type="Emphasized"/>
+											
+										</layout:Grid>
+									</content>
+								</Panel>
+								
+								<!-- Recent Activity -->
+								<Panel headerText="Recent Activity" 
+									   class="sapUiMediumMarginTop">
+									<content>
+										<List items="{/recentActivity}" 
+											  class="sapUiNoMarginTop">
+											<items>
+												<CustomListItem>
+													<HBox alignItems="Center" class="sapUiTinyMargin">
+														<core:Icon src="{icon}" 
+																  size="1rem" 
+																  class="sapUiTinyMarginEnd"
+																  color="{iconColor}"/>
+														<VBox class="sapUiTinyMarginStart">
+															<Text text="{description}" 
+																  class="sapUiMediumMarginBottom"/>
+															<Text text="{timestamp}" 
+																  class="sapUiTinyFontSize sapUiTextColorNeutral"/>
+														</VBox>
+													</HBox>
+												</CustomListItem>
+											</items>
+										</List>
+									</content>
+								</Panel>
+								
+							</VBox>
+						</content>
+						
+					</Page>
+				</VBox>
 				
-				<!-- Quick Actions -->
-				<Panel headerText="Quick Actions" 
-					   class="sapUiMediumMarginTop">
-					<content>
-						<layout:Grid defaultSpan="XL4 L4 M6 S12" 
-									class="sapUiMediumMarginBottom">
-							
-							<Button text="Create New Role" 
-									icon="sap-icon://add" 
-									press="onCreateRolePress"
-									class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-									type="Emphasized"/>
-							
-							<Button text="Add Assignment Rule" 
-									icon="sap-icon://rule" 
-									press="onAddAssignmentRulePress"
-									class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-									type="Emphasized"/>
-							
-							<Button text="Generate Audit Report" 
-									icon="sap-icon://document" 
-									press="onGenerateAuditReportPress"
-									class="sapUiTinyMarginEnd sapUiTinyMarginBottom"
-									type="Emphasized"/>
-							
-						</layout:Grid>
-					</content>
-				</Panel>
-				
-				<!-- Recent Activity -->
-				<Panel headerText="Recent Activity" 
-					   class="sapUiMediumMarginTop">
-					<content>
-						<List items="{/recentActivity}" 
-							  class="sapUiNoMarginTop">
-							<items>
-								<CustomListItem>
-									<HBox alignItems="Center" class="sapUiTinyMargin">
-										<core:Icon src="{icon}" 
-												  size="1rem" 
-												  class="sapUiTinyMarginEnd"
-												  color="{iconColor}"/>
-										<VBox class="sapUiTinyMarginStart">
-											<Text text="{description}" 
-												  class="sapUiTinyMarginBottom"/>
-											<Text text="{timestamp}" 
-												  class="sapUiTinyFontSize sapUiTextColorNeutral"/>
-										</VBox>
-									</HBox>
-								</CustomListItem>
-							</items>
-						</List>
-					</content>
-				</Panel>
-				
-			</VBox>
+			</layout:HorizontalLayout>
 		</content>
-		
 	</Page>
 </mvc:View>

@@ -53,6 +53,55 @@ sap.ui.define([
 			this.getView().setModel(oModel);
 		},
 
+		// Navigation functions
+		onNavItemPress: function (oEvent) {
+			var oButton = oEvent.getSource();
+			var sRoute = oButton.data("route");
+			
+			if (sRoute) {
+				// Update navigation selection
+				this._selectNavigationItem(sRoute);
+				
+				// Navigate to the selected route
+				var oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo(sRoute);
+			}
+		},
+
+		_selectNavigationItem: function (sKey) {
+			// Remove selection from all navigation items
+			this._clearNavigationSelection();
+			
+			// Select the current item
+			var oItem = this.getView().byId(sKey + "Item");
+			if (oItem) {
+				oItem.addStyleClass("nav-button-selected");
+			}
+		},
+
+		_clearNavigationSelection: function () {
+			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
+			aNavItems.forEach(function(sKey) {
+				var oItem = this.getView().byId(sKey + "Item");
+				if (oItem) {
+					oItem.removeStyleClass("nav-button-selected");
+				}
+			}.bind(this));
+		},
+
+		// Theme toggle function
+		onThemeToggle: function () {
+			var currentTheme = sap.ui.getCore().getConfiguration().getTheme();
+			var newTheme = currentTheme === "sap_horizon" ? "sap_horizon_dark" : "sap_horizon";
+			
+			sap.ui.getCore().applyTheme(newTheme);
+			localStorage.setItem("ui5-theme", newTheme);
+			
+			var themeText = newTheme === "sap_horizon" ? "Light" : "Dark";
+			MessageToast.show("Switched to " + themeText + " theme");
+		},
+
+		// Dashboard action functions
 		onRolesPress: function () {
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("roles");

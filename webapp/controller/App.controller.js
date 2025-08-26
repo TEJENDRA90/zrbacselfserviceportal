@@ -9,47 +9,45 @@ sap.ui.define([
 	return Controller.extend("rbacselfserviceportal.zrbacselfserviceportal.controller.App", {
 
 		onInit: function () {
+			// Initialize navigation items
+			this._initNavigationItems();
+			
 			// Set theme from localStorage or default to 'sap_horizon'
 			this._initTheme();
-			
-			// Set initial selection to dashboard
-			this._setInitialSelection();
 		},
 
-		_setInitialSelection: function () {
-			// Get the current route and set the appropriate navigation item as selected
-			var oRouter = this.getOwnerComponent().getRouter();
-			var sCurrentRoute = oRouter.getHashChanger().getHash();
-			
-			if (!sCurrentRoute || sCurrentRoute === "") {
-				// Default to dashboard
-				this._selectNavigationItem("dashboard");
-			} else {
-				// Extract route name from hash
-				var sRoute = sCurrentRoute.replace("#/", "");
-				this._selectNavigationItem(sRoute);
-			}
-		},
-
-		_selectNavigationItem: function (sKey) {
-			// Remove selection from all navigation items
-			this._clearNavigationSelection();
-			
-			// Select the current item
-			var oItem = this.getView().byId(sKey + "Item");
-			if (oItem) {
-				oItem.addStyleClass("nav-button-selected");
-			}
-		},
-
-		_clearNavigationSelection: function () {
-			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
-			aNavItems.forEach(function(sKey) {
-				var oItem = this.getView().byId(sKey + "Item");
-				if (oItem) {
-					oItem.removeStyleClass("nav-button-selected");
+		_initNavigationItems: function () {
+			var navItems = [
+				{
+					title: "Dashboard",
+					icon: "sap-icon://home",
+					route: "dashboard"
+				},
+				{
+					title: "Role Management",
+					icon: "sap-icon://role",
+					route: "roles"
+				},
+				{
+					title: "Default Assignments",
+					icon: "sap-icon://rule",
+					route: "assignments"
+				},
+				{
+					title: "Exception Handling",
+					icon: "sap-icon://alert",
+					route: "exceptions"
+				},
+				{
+					title: "Audit Report",
+					icon: "sap-icon://document",
+					route: "audit"
 				}
-			}.bind(this));
+			];
+
+			var oModel = new sap.ui.model.json.JSONModel();
+			oModel.setData({ navItems: navItems });
+			this.getView().setModel(oModel);
 		},
 
 		_initTheme: function () {
@@ -58,17 +56,13 @@ sap.ui.define([
 		},
 
 		onNavItemPress: function (oEvent) {
-			var oButton = oEvent.getSource();
-			var sRoute = oButton.data("route");
+			var oItem = oEvent.getSource();
+			var oContext = oItem.getBindingContext();
+			var oData = oContext.getObject();
 			
-			if (sRoute) {
-				// Update navigation selection
-				this._selectNavigationItem(sRoute);
-				
-				// Navigate to the selected route
-				var oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo(sRoute);
-			}
+			// Navigate to the selected route
+			var oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo(oData.route);
 		},
 
 		onThemeToggle: function () {
