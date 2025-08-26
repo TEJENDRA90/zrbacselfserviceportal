@@ -8,11 +8,13 @@ sap.ui.define([
 	return Controller.extend("rbacselfserviceportal.zrbacselfserviceportal.controller.Dashboard", {
 
 		onInit: function () {
+			console.log("Dashboard controller initialized");
 			this._loadDashboardData();
 			this._setInitialSelection();
 		},
 
 		_loadDashboardData: function () {
+			console.log("Loading dashboard data");
 			// Mock data - in real application this would come from a service
 			var dashboardData = {
 				stats: {
@@ -52,31 +54,59 @@ sap.ui.define([
 			var oModel = new sap.ui.model.json.JSONModel();
 			oModel.setData(dashboardData);
 			this.getView().setModel(oModel);
+			console.log("Dashboard data loaded:", dashboardData);
 		},
 
 		_setInitialSelection: function () {
-			// Set Dashboard as initially selected
-			var oSideNavigation = this.getView().byId("sideNavigation");
-			var oDashboardItem = this.getView().byId("dashboardItem");
-			if (oSideNavigation && oDashboardItem) {
-				oSideNavigation.setSelectedItem(oDashboardItem);
+			console.log("Setting initial selection");
+			// Dashboard is already selected by default in the view
+			console.log("Dashboard item selected by default");
+		},
+
+		// Navigation function for button-based navigation
+		onNavItemPress: function (oEvent) {
+			console.log("Navigation button pressed:", oEvent);
+			var oButton = oEvent.getSource();
+			var sRoute = oButton.data("route");
+			
+			console.log("Selected route:", sRoute);
+			
+			if (sRoute) {
+				// Update navigation selection
+				this._selectNavigationItem(sRoute);
+				
+				// Navigate to the selected route
+				var oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo(sRoute);
 			}
 		},
 
-		// Navigation function for SAP Side Navigation
-		onNavItemSelect: function (oEvent) {
-			var oItem = oEvent.getParameter("item");
-			var sKey = oItem.getKey();
+		_selectNavigationItem: function (sKey) {
+			console.log("Selecting navigation item:", sKey);
+			// Remove selection from all navigation items
+			this._clearNavigationSelection();
 			
-			if (sKey) {
-				// Navigate to the selected route
-				var oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo(sKey);
+			// Select the current item
+			var oItem = this.getView().byId(sKey + "Item");
+			if (oItem) {
+				oItem.addStyleClass("nav-button-selected");
+				console.log("Navigation item selected:", sKey);
 			}
+		},
+
+		_clearNavigationSelection: function () {
+			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
+			aNavItems.forEach(function(sKey) {
+				var oItem = this.getView().byId(sKey + "Item");
+				if (oItem) {
+					oItem.removeStyleClass("nav-button-selected");
+				}
+			}.bind(this));
 		},
 
 		// Theme toggle function
 		onThemeToggle: function () {
+			console.log("Theme toggle pressed");
 			var currentTheme = sap.ui.getCore().getConfiguration().getTheme();
 			var newTheme = currentTheme === "sap_horizon" ? "sap_horizon_dark" : "sap_horizon";
 			
@@ -89,35 +119,42 @@ sap.ui.define([
 
 		// Dashboard action functions
 		onRolesPress: function () {
+			console.log("Roles pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("roles");
 		},
 
 		onAssignmentsPress: function () {
+			console.log("Assignments pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("assignments");
 		},
 
 		onExceptionsPress: function () {
+			console.log("Exceptions pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("exceptions");
 		},
 
 		onUsersPress: function () {
+			console.log("Users pressed");
 			MessageToast.show("User management feature coming soon!");
 		},
 
 		onCreateRolePress: function () {
+			console.log("Create role pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("roleNew");
 		},
 
 		onAddAssignmentRulePress: function () {
+			console.log("Add assignment rule pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("assignments");
 		},
 
 		onGenerateAuditReportPress: function () {
+			console.log("Generate audit report pressed");
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("audit");
 		}
