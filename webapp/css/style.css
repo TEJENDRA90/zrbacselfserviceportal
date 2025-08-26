@@ -7,93 +7,92 @@
     min-width: 300px !important;
     max-width: 300px !important;
     height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
+    overflow: visible !important;
 }
 
-/* Sidebar header */
-.sidebar-header {
+/* SAP Side Navigation customization */
+.sapTntSideNavigation {
+    background-color: #f5f5f5 !important;
+    border: none !important;
+    height: 100% !important;
+    width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Navigation header styling */
+.nav-header-item {
     background-color: #0073e6 !important;
     color: white !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
     padding: 1rem !important;
-    border-radius: 0 0 8px 0 !important;
     margin-bottom: 1rem !important;
+    border-radius: 4px !important;
 }
 
-.sidebar-header .sapMText {
+.nav-header-item .sapTntNavigationListItemText {
     color: white !important;
     font-weight: bold !important;
-    font-size: 1.2rem !important;
 }
 
-/* Navigation area */
-.sidebar-nav {
-    flex: 1 !important;
-    background-color: transparent !important;
+.nav-header-item .sapTntNavigationListItemIcon {
+    color: white !important;
 }
 
-/* Navigation buttons */
-.nav-button {
-    width: 100% !important;
-    text-align: left !important;
-    padding: 0.75rem 1rem !important;
+/* Navigation items styling */
+.sapTntNavigationListItem {
     margin: 0.25rem 0 !important;
     border-radius: 4px !important;
     transition: all 0.2s ease !important;
-    background-color: transparent !important;
-    border: none !important;
-    color: #333 !important;
-    font-size: 0.9rem !important;
+    padding: 0.75rem 1rem !important;
+    display: block !important;
+    visibility: visible !important;
 }
 
-.nav-button:hover {
+.sapTntNavigationListItem:hover {
     background-color: #e8f4fd !important;
-    color: #0073e6 !important;
 }
 
-.nav-button:focus {
-    outline: 2px solid #0073e6 !important;
-    outline-offset: 2px !important;
-}
-
-/* Selected navigation button */
-.nav-button-selected {
+.sapTntNavigationListItem.sapTntNavigationListItemSelected {
     background-color: #0073e6 !important;
     color: white !important;
 }
 
-.nav-button-selected:hover {
-    background-color: #0056b3 !important;
+.sapTntNavigationListItem.sapTntNavigationListItemSelected .sapTntNavigationListItemText {
     color: white !important;
 }
 
-/* Sidebar footer */
-.sidebar-footer {
+.sapTntNavigationListItem.sapTntNavigationListItemSelected .sapTntNavigationListItemIcon {
+    color: white !important;
+}
+
+/* Theme switcher styling */
+.theme-nav-item {
     background-color: #f0f0f0 !important;
-    border-top: 1px solid #e0e0e0 !important;
-    padding: 1rem 0 !important;
-    margin-top: auto !important;
-}
-
-/* Theme button */
-.theme-button {
-    width: 100% !important;
-    margin-bottom: 1rem !important;
-    background-color: #f8f9fa !important;
     border: 1px solid #d0d0d0 !important;
-    color: #333 !important;
+    border-radius: 4px !important;
+    margin: 0.5rem 0 !important;
 }
 
-.theme-button:hover {
+.theme-nav-item:hover {
     background-color: #e0e0e0 !important;
 }
 
-/* Copyright text */
-.copyright-text {
+/* Copyright text styling */
+.copyright-nav-item {
     color: #666 !important;
     font-size: 0.8rem !important;
     text-align: center !important;
     padding: 0.5rem !important;
+    border-top: 1px solid #e0e0e0 !important;
+    margin-top: 1rem !important;
+}
+
+.copyright-nav-item .sapTntNavigationListItemText {
+    color: #666 !important;
+    font-size: 0.8rem !important;
 }
 
 /* Main content area */
@@ -127,6 +126,19 @@
     }
 }
 
+/* Navigation list styling */
+.sapTntNavigationList {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Ensure proper spacing */
+.sapTntNavigationListItem {
+    margin: 0.25rem 0.5rem !important;
+}
+
 /* Dashboard content styling */
 .sapMGenericTile {
     margin: 0.5rem !important;
@@ -142,6 +154,13 @@
 
 /* Ensure all content is visible */
 .sapMText, .sapMTitle, .sapMButton, .sapMPanel, .sapMList, .sapMGenericTile {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+/* Force visibility for all navigation elements */
+.sapTntSideNavigation * {
     visibility: visible !important;
     opacity: 1 !important;
     display: block !important;

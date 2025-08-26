@@ -59,49 +59,34 @@ sap.ui.define([
 
 		_setInitialSelection: function () {
 			console.log("Setting initial selection");
-			// Dashboard is already selected by default in the view
-			console.log("Dashboard item selected by default");
+			// Set Dashboard as initially selected
+			var oSideNavigation = this.getView().byId("sideNavigation");
+			var oDashboardItem = this.getView().byId("dashboardItem");
+			
+			console.log("Side Navigation:", oSideNavigation);
+			console.log("Dashboard Item:", oDashboardItem);
+			
+			if (oSideNavigation && oDashboardItem) {
+				oSideNavigation.setSelectedItem(oDashboardItem);
+				console.log("Dashboard item selected");
+			} else {
+				console.error("Side Navigation or Dashboard Item not found");
+			}
 		},
 
-		// Navigation function for button-based navigation
-		onNavItemPress: function (oEvent) {
-			console.log("Navigation button pressed:", oEvent);
-			var oButton = oEvent.getSource();
-			var sRoute = oButton.data("route");
+		// Navigation function for SAP Side Navigation
+		onNavItemSelect: function (oEvent) {
+			console.log("Navigation item selected:", oEvent);
+			var oItem = oEvent.getParameter("item");
+			var sKey = oItem.getKey();
 			
-			console.log("Selected route:", sRoute);
+			console.log("Selected key:", sKey);
 			
-			if (sRoute) {
-				// Update navigation selection
-				this._selectNavigationItem(sRoute);
-				
+			if (sKey) {
 				// Navigate to the selected route
 				var oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo(sRoute);
+				oRouter.navTo(sKey);
 			}
-		},
-
-		_selectNavigationItem: function (sKey) {
-			console.log("Selecting navigation item:", sKey);
-			// Remove selection from all navigation items
-			this._clearNavigationSelection();
-			
-			// Select the current item
-			var oItem = this.getView().byId(sKey + "Item");
-			if (oItem) {
-				oItem.addStyleClass("nav-button-selected");
-				console.log("Navigation item selected:", sKey);
-			}
-		},
-
-		_clearNavigationSelection: function () {
-			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
-			aNavItems.forEach(function(sKey) {
-				var oItem = this.getView().byId(sKey + "Item");
-				if (oItem) {
-					oItem.removeStyleClass("nav-button-selected");
-				}
-			}.bind(this));
 		},
 
 		// Theme toggle function
