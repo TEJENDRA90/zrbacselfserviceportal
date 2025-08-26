@@ -9,6 +9,7 @@ sap.ui.define([
 
 		onInit: function () {
 			this._loadDashboardData();
+			this._setInitialSelection();
 		},
 
 		_loadDashboardData: function () {
@@ -53,40 +54,25 @@ sap.ui.define([
 			this.getView().setModel(oModel);
 		},
 
-		// Navigation functions
-		onNavItemPress: function (oEvent) {
-			var oButton = oEvent.getSource();
-			var sRoute = oButton.data("route");
+		_setInitialSelection: function () {
+			// Set Dashboard as initially selected
+			var oSideNavigation = this.getView().byId("sideNavigation");
+			var oDashboardItem = this.getView().byId("dashboardItem");
+			if (oSideNavigation && oDashboardItem) {
+				oSideNavigation.setSelectedItem(oDashboardItem);
+			}
+		},
+
+		// Navigation function for SAP Side Navigation
+		onNavItemSelect: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+			var sKey = oItem.getKey();
 			
-			if (sRoute) {
-				// Update navigation selection
-				this._selectNavigationItem(sRoute);
-				
+			if (sKey) {
 				// Navigate to the selected route
 				var oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo(sRoute);
+				oRouter.navTo(sKey);
 			}
-		},
-
-		_selectNavigationItem: function (sKey) {
-			// Remove selection from all navigation items
-			this._clearNavigationSelection();
-			
-			// Select the current item
-			var oItem = this.getView().byId(sKey + "Item");
-			if (oItem) {
-				oItem.addStyleClass("nav-button-selected");
-			}
-		},
-
-		_clearNavigationSelection: function () {
-			var aNavItems = ["dashboard", "roles", "assignments", "exceptions", "audit"];
-			aNavItems.forEach(function(sKey) {
-				var oItem = this.getView().byId(sKey + "Item");
-				if (oItem) {
-					oItem.removeStyleClass("nav-button-selected");
-				}
-			}.bind(this));
 		},
 
 		// Theme toggle function
