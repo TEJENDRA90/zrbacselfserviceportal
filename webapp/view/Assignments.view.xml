@@ -1,0 +1,116 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.Assignments"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:table="sap.ui.table"
+	displayBlock="true">
+	
+	<Page title="Default Role Assignment" 
+		  showHeader="true" 
+		  class="sapUiResponsiveContentPadding">
+		
+		<headerContent>
+			<Button text="Add Rule" 
+					icon="sap-icon://add" 
+					press="onAddRulePress"
+					type="Emphasized"/>
+		</headerContent>
+		
+		<content>
+			<VBox class="sapUiMediumMargin">
+				
+				<!-- Assignment Rules Table -->
+				<Panel headerText="Default Assignment Rules" 
+					   class="sapUiMediumMarginBottom">
+					<content>
+						<table:Table id="assignmentsTable"
+									rows="{/assignments}"
+									selectionMode="None"
+									enableBusyIndicator="true"
+									class="sapUiTinyMarginTop">
+							
+							<table:columns>
+								<table:Column width="150px">
+									<Label text="Job Title"/>
+									<table:template>
+										<Text text="{jobTitle}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="100px">
+									<Label text="Company"/>
+									<table:template>
+										<Text text="{company || 'Any'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="100px">
+									<Label text="Function"/>
+									<table:template>
+										<Text text="{function || 'Any'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="100px">
+									<Label text="Operation"/>
+									<table:template>
+										<Text text="{operation || 'Any'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="100px">
+									<Label text="Ship"/>
+									<table:template>
+										<Text text="{ship || 'Any'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Department"/>
+									<table:template>
+										<Text text="{department || 'Any'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="200px">
+									<Label text="Assigned Roles"/>
+									<table:template>
+										<VBox items="{assignedRoles}">
+											<items>
+												<Text text="{name}" 
+													  class="sapUiTinyMarginBottom"
+													  class="sapUiTinyFontSize"/>
+											</items>
+										</VBox>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Actions"/>
+									<table:template>
+										<HBox alignItems="Center" class="sapUiTinyMargin">
+											<Button icon="sap-icon://edit" 
+													press="onEditRulePress"
+													class="sapUiTinyMarginEnd"
+													tooltip="Edit Rule"
+													type="Transparent"/>
+											<Button icon="sap-icon://delete" 
+													press="onDeleteRulePress"
+													class="sapUiTinyMarginStart"
+													tooltip="Delete Rule"
+													type="Transparent"/>
+										</HBox>
+									</table:template>
+								</table:Column>
+							</table:columns>
+							
+						</table:Table>
+					</content>
+				</Panel>
+				
+			</VBox>
+		</content>
+		
+	</Page>
+</mvc:View>

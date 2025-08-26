@@ -1,0 +1,161 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.RoleEdit"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"
+	displayBlock="true">
+	
+	<Page title="{= ${/isNewRole} ? 'Create New Role' : 'Edit Role: ' + ${/role/name}}" 
+		  showHeader="true" 
+		  class="sapUiResponsiveContentPadding">
+		
+		<headerContent>
+			<Button text="Cancel" 
+					icon="sap-icon://decline" 
+					press="onCancelPress"
+					class="sapUiTinyMarginEnd"
+					type="Transparent"/>
+			<Button text="Save Role" 
+					icon="sap-icon://save" 
+					press="onSavePress"
+					type="Emphasized"/>
+		</headerContent>
+		
+		<content>
+			<ScrollContainer height="100%" width="100%" vertical="true">
+				<VBox class="sapUiMediumMargin">
+					
+					<!-- Basic Information -->
+					<Panel headerText="Basic Information" class="sapUiMediumMarginBottom">
+						<content>
+							<form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+								<form:content>
+									<Label text="Role Name" required="true"/>
+									<Input value="{/role/name}" 
+										   placeholder="Enter role name"
+										   class="sapUiTinyMarginBottom"/>
+									
+									<Label text="Description" required="true"/>
+									<TextArea value="{/role/description}" 
+											  placeholder="Enter role description"
+											  rows="3"
+											  class="sapUiTinyMarginBottom"/>
+								</form:content>
+							</form:SimpleForm>
+						</content>
+					</Panel>
+					
+					<!-- Application Access -->
+					<Panel headerText="Application Access & Actions" class="sapUiMediumMarginBottom">
+						<content>
+							<VBox class="sapUiTinyMarginTop">
+								<Text text="Select applications and their access levels:" class="sapUiTinyMarginBottom"/>
+								
+								<ScrollContainer height="400px" width="100%" vertical="true">
+									<VBox items="{/appList}">
+										<items>
+											<HBox alignItems="Center" class="sapUiTinyMarginBottom">
+												<Text text="{appName}" 
+													  class="sapUiTinyMarginEnd"
+													  width="200px"/>
+												<CheckBox text="Read" 
+														 selected="{readAccess}"
+														 class="sapUiTinyMarginEnd"/>
+												<CheckBox text="Write" 
+														 selected="{writeAccess}"
+														 class="sapUiTinyMarginEnd"/>
+											</HBox>
+										</items>
+									</VBox>
+								</ScrollContainer>
+							</VBox>
+						</content>
+					</Panel>
+					
+					<!-- Write Restriction -->
+					<Panel headerText="Write Restriction" 
+						   class="sapUiMediumMarginBottom"
+						   visible="{= ${/hasWriteAccess}}">
+						<content>
+							<HBox alignItems="Center" class="sapUiTinyMarginTop">
+								<Input value="{/role/writeRestrictionDays}" 
+									   type="Number"
+									   placeholder="Enter days"
+									   class="sapUiTinyMarginEnd"
+									   width="120px"/>
+								<Text text="days in past" class="sapUiTinyMarginEnd"/>
+								<CheckBox text="No restriction" 
+										 selected="{/noWriteRestriction}"/>
+							</HBox>
+						</content>
+					</Panel>
+					
+					<!-- Functionality Access -->
+					<Panel headerText="VPP Functionality Access" class="sapUiMediumMarginBottom">
+						<content>
+							<Select selectedKey="{/role/functionalityAccess}" 
+									class="sapUiTinyMarginTop">
+								<core:Item key="Both" text="Both"/>
+								<core:Item key="Planning View" text="Planning View"/>
+								<core:Item key="Scheduling View" text="Scheduling View"/>
+							</Select>
+						</content>
+					</Panel>
+					
+					<!-- Day Type Access -->
+					<Panel headerText="Day Type Access" class="sapUiMediumMarginBottom">
+						<content>
+							<MultiComboBox selectedKeys="{/role/dayTypeAccess}" 
+										   class="sapUiTinyMarginTop"
+										   width="100%">
+								<core:Item key="All" text="All"/>
+								<core:Item key="W" text="W"/>
+								<core:Item key="W1" text="W1"/>
+								<core:Item key="W-am" text="W-am"/>
+								<core:Item key="W-pm" text="W-pm"/>
+								<core:Item key="WX" text="WX"/>
+								<core:Item key="V" text="V"/>
+								<core:Item key="DO" text="DO"/>
+								<core:Item key="T" text="T"/>
+								<core:Item key="TH" text="TH"/>
+								<core:Item key="X" text="X"/>
+								<core:Item key="F" text="F"/>
+								<core:Item key="NA" text="NA"/>
+							</MultiComboBox>
+						</content>
+					</Panel>
+					
+					<!-- Permission Attributes -->
+					<Panel headerText="Permission Attributes" class="sapUiMediumMarginBottom">
+						<content>
+							<layout:Grid defaultSpan="XL6 L6 M6 S12" 
+										class="sapUiTinyMarginTop">
+								<VBox items="{/role/permissions}">
+									<items>
+										<VBox class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+											<Label text="{attribute}" class="sapUiTinyMarginBottom"/>
+											<MultiComboBox selectedKeys="{values}" 
+														   width="100%">
+												<core:Item key="All" text="All"/>
+												<core:Item key="Dynamic" text="Dynamic"/>
+												<VBox items="{/attributeValues}">
+													<items>
+														<core:Item key="{value}" text="{value}"/>
+													</items>
+												</VBox>
+											</MultiComboBox>
+										</VBox>
+									</items>
+								</VBox>
+							</layout:Grid>
+						</content>
+					</Panel>
+					
+				</VBox>
+			</ScrollContainer>
+		</content>
+		
+	</Page>
+</mvc:View>

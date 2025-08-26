@@ -1,0 +1,172 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.Audit"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:table="sap.ui.table"
+	xmlns:layout="sap.ui.layout"
+	displayBlock="true">
+	
+	<Page title="Audit Report" 
+		  showHeader="true" 
+		  class="sapUiResponsiveContentPadding">
+		
+		<content>
+			<VBox class="sapUiMediumMargin">
+				
+				<!-- Filters -->
+				<Panel headerText="Filters" class="sapUiMediumMarginBottom">
+					<content>
+						<layout:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiTinyMarginTop">
+							<VBox class="sapUiTinyMarginEnd">
+								<Label text="User Name/ID" class="sapUiTinyMarginBottom"/>
+								<Input placeholder="Search user..." 
+									   value="{/filters/userSearch}"
+									   class="sapUiTinyMarginBottom"/>
+								
+								<Label text="Assignment Type" class="sapUiTinyMarginBottom"/>
+								<Select selectedKey="{/filters/assignmentType}" 
+										class="sapUiTinyMarginBottom">
+									<core:Item key="All" text="All Types"/>
+									<core:Item key="Default" text="Default"/>
+									<core:Item key="Exception" text="Exception"/>
+								</Select>
+							</VBox>
+							
+							<VBox class="sapUiTinyMarginStart">
+								<Label text="Role" class="sapUiTinyMarginBottom"/>
+								<Select selectedKey="{/filters/roleId}" 
+										class="sapUiTinyMarginBottom">
+									<core:Item key="All" text="All Roles"/>
+									<core:Item key="role-1" text="Ship Captain"/>
+									<core:Item key="role-2" text="Ship Hotel Manager"/>
+									<core:Item key="role-3" text="Corporate Captain"/>
+									<core:Item key="role-4" text="HR Admin"/>
+									<core:Item key="role-5" text="Super Admin"/>
+									<core:Item key="role-6" text="Exception Admin"/>
+								</Select>
+								
+								<HBox alignItems="End" class="sapUiTinyMarginTop">
+									<Button text="Reset" 
+											press="onResetFiltersPress"
+											class="sapUiTinyMarginEnd"
+											type="Transparent"/>
+									<Button text="Export" 
+											icon="sap-icon://download" 
+											press="onExportPress"
+											type="Emphasized"/>
+								</HBox>
+							</VBox>
+						</layout:Grid>
+						
+						<layout:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiMediumMarginTop">
+							<VBox class="sapUiTinyMarginEnd">
+								<Label text="Assigned After" class="sapUiTinyMarginBottom"/>
+								<DatePicker value="{/filters/startDate}" 
+										   displayFormat="yyyy-MM-dd"
+										   class="sapUiTinyMarginBottom"/>
+							</VBox>
+							
+							<VBox class="sapUiTinyMarginStart">
+								<Label text="Assigned Before" class="sapUiTinyMarginBottom"/>
+								<DatePicker value="{/filters/endDate}" 
+										   displayFormat="yyyy-MM-dd"
+										   class="sapUiTinyMarginBottom"/>
+							</VBox>
+						</layout:Grid>
+					</content>
+				</Panel>
+				
+				<!-- Audit Records Table -->
+				<Panel headerText="Audit Records" class="sapUiMediumMarginBottom">
+					<content>
+						<table:Table id="auditTable"
+									rows="{/auditRecords}"
+									selectionMode="None"
+									enableBusyIndicator="true"
+									class="sapUiTinyMarginTop">
+							
+							<table:columns>
+								<table:Column width="200px">
+									<Label text="User"/>
+									<table:template>
+										<VBox class="sapUiTinyMargin">
+											<Text text="{userName}" class="sapUiTinyMarginBottom"/>
+											<Text text="({userId})" 
+												  class="sapUiTinyFontSize sapUiTextColorNeutral"/>
+										</VBox>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="150px">
+									<Label text="Role"/>
+									<table:template>
+										<Text text="{roleName}" 
+											  class="sapUiTinyMargin"
+											  color="sapUiLink"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Type"/>
+									<table:template>
+										<ObjectStatus text="{assignmentType}" 
+													 state="{= ${assignmentType} === 'Default' ? 'Information' : 'Warning'}"
+													 class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Assigned By"/>
+									<table:template>
+										<Text text="{assignedBy}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Assigned On"/>
+									<table:template>
+										<Text text="{assignedOn}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="150px">
+									<Label text="Validity Period"/>
+									<table:template>
+										<Text text="{= ${startDate} && ${endDate} ? ${startDate} + ' to ' + ${endDate} : 'N/A'}" 
+											  class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="150px">
+									<Label text="Reason"/>
+									<table:template>
+										<Text text="{reason || 'N/A'}" 
+											  class="sapUiTinyMargin"
+											  class="sapUiTextItalic"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="100px">
+									<Label text="Status"/>
+									<table:template>
+										<ObjectStatus text="{status}" 
+													 state="{= ${status} === 'Active' ? 'Success' : ${status} === 'Expired' ? 'Warning' : 'Error'}"
+													 class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
+							
+						</table:Table>
+						
+						<Text text="No audit records found for the selected criteria." 
+							  class="sapUiTinyMarginTop"
+							  visible="{= ${/auditRecords}.length === 0}"/>
+					</content>
+				</Panel>
+				
+			</VBox>
+		</content>
+		
+	</Page>
+</mvc:View>

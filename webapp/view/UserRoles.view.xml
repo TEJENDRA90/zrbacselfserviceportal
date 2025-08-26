@@ -1,0 +1,106 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.UserRoles"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout"
+	displayBlock="true">
+	
+	<Page title="Manage Roles for {/user/name}" 
+		  showHeader="true" 
+		  class="sapUiResponsiveContentPadding">
+		
+		<headerContent>
+			<HBox alignItems="Center" class="sapUiTinyMarginEnd">
+				<Button text="Add Exception" 
+						icon="sap-icon://add" 
+						press="onAddExceptionPress"
+						class="sapUiTinyMarginEnd"
+						type="Emphasized"/>
+			</HBox>
+			<Button text="Back to List" 
+					icon="sap-icon://nav-back" 
+					press="onBackToListPress"
+					type="Transparent"/>
+		</headerContent>
+		
+		<content>
+			<VBox class="sapUiMediumMargin">
+				
+				<!-- User Information -->
+				<Panel headerText="User Information" class="sapUiMediumMarginBottom">
+					<content>
+						<layout:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiTinyMarginTop">
+							<VBox class="sapUiTinyMarginEnd">
+								<Label text="Name" class="sapUiTinyMarginBottom"/>
+								<Text text="{/user/name}" class="sapUiTinyMarginBottom"/>
+								
+								<Label text="Job Title" class="sapUiTinyMarginBottom"/>
+								<Text text="{/user/jobTitle}" class="sapUiTinyMarginBottom"/>
+							</VBox>
+							
+							<VBox class="sapUiTinyMarginStart">
+								<Label text="Department" class="sapUiTinyMarginBottom"/>
+								<Text text="{/user/department}" class="sapUiTinyMarginBottom"/>
+								
+								<Label text="User ID" class="sapUiTinyMarginBottom"/>
+								<Text text="{/user/id}" class="sapUiTinyMarginBottom"/>
+							</VBox>
+						</layout:Grid>
+					</content>
+				</Panel>
+				
+				<!-- Assigned Roles -->
+				<Panel headerText="Assigned Roles" class="sapUiMediumMarginBottom">
+					<content>
+						<VBox items="{/user/roles}" class="sapUiTinyMarginTop">
+							<items>
+								<HBox alignItems="Start" class="sapUiTinyMarginBottom">
+									<VBox class="sapUiTinyMarginEnd" width="100%">
+										<HBox alignItems="Center" class="sapUiTinyMarginBottom">
+											<Text text="{roleName}" 
+												  class="sapUiLargeFontSize sapUiTextBold sapUiTinyMarginEnd"
+												  color="sapUiLink"/>
+											<ObjectStatus text="{status}" 
+														 state="{= ${status} === 'Active' ? 'Success' : ${status} === 'Expired' ? 'Warning' : 'Error'}"
+														 class="sapUiTinyMarginStart"/>
+										</HBox>
+										
+										<VBox class="sapUiTinyMarginStart">
+											<Text text="Assigned: {assignedOn} by {assignedBy}" 
+												  class="sapUiTinyFontSize sapUiTinyMarginBottom"/>
+											<Text text="Valid: {startDate} to {endDate}" 
+												  class="sapUiTinyFontSize sapUiTinyMarginBottom"
+												  visible="{= ${startDate} && ${endDate}}"/>
+											<Text text="Removed: {removedOn}" 
+												  class="sapUiTinyFontSize sapUiTinyMarginBottom"
+												  visible="{= ${removedOn}}"/>
+											<Text text="Reason: {reason}" 
+												  class="sapUiTinyFontSize sapUiTinyMarginBottom"
+												  visible="{= ${reason}}"
+												  class="sapUiTextItalic"/>
+										</VBox>
+									</VBox>
+									
+									<VBox class="sapUiTinyMarginStart" visible="{= ${status} === 'Active'}">
+										<Button text="Remove Role" 
+												icon="sap-icon://less" 
+												press="onRemoveRolePress"
+												type="Negative"
+												class="sapUiTinyMarginBottom"/>
+									</VBox>
+								</HBox>
+							</items>
+						</VBox>
+						
+						<Text text="No roles assigned to this user." 
+							  class="sapUiTinyMarginTop"
+							  visible="{= ${/user/roles}.length === 0}"/>
+					</content>
+				</Panel>
+				
+			</VBox>
+		</content>
+		
+	</Page>
+</mvc:View>

@@ -1,0 +1,157 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.Roles"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:table="sap.ui.table"
+	xmlns:upload="sap.ui.unified"
+	xmlns:layout="sap.ui.layout"
+	displayBlock="true">
+	
+	<Page title="Role Management" 
+		  showHeader="true" 
+		  class="sapUiResponsiveContentPadding">
+		
+		<headerContent>
+			<HBox alignItems="Center" class="sapUiTinyMarginEnd">
+				<Button text="Export to Excel" 
+						icon="sap-icon://excel-attachment" 
+						press="onExportExcelPress"
+						class="sapUiTinyMarginEnd"
+						type="Transparent"/>
+			</HBox>
+			<Button text="Create Role" 
+					icon="sap-icon://add" 
+					press="onCreateRolePress"
+					type="Emphasized"/>
+		</headerContent>
+		
+		<content>
+			<VBox class="sapUiMediumMargin">
+				
+				<!-- Role Table -->
+				<Panel headerText="Role Definitions" 
+					   class="sapUiMediumMarginBottom">
+					<content>
+						<table:Table id="rolesTable"
+									rows="{/roles}"
+									selectionMode="None"
+									enableBusyIndicator="true"
+									class="sapUiTinyMarginTop">
+							
+							<table:columns>
+								<table:Column width="200px">
+									<Label text="Role Name"/>
+									<table:template>
+										<Text text="{name}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="300px">
+									<Label text="Description"/>
+									<table:template>
+										<Text text="{description}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="150px">
+									<Label text="App Access"/>
+									<table:template>
+										<Text text="{= ${appAccess}.length || 0} apps" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="150px">
+									<Label text="Functionality"/>
+									<table:template>
+										<Text text="{functionalityAccess || 'N/A'}" class="sapUiTinyMargin"/>
+									</table:template>
+								</table:Column>
+								
+								<table:Column width="120px">
+									<Label text="Actions"/>
+									<table:template>
+										<HBox alignItems="Center" class="sapUiTinyMargin">
+											<Button icon="sap-icon://edit" 
+													press="onEditRolePress"
+													class="sapUiTinyMarginEnd"
+													tooltip="Edit Role"
+													type="Transparent"/>
+											<Button icon="sap-icon://delete" 
+													press="onDeleteRolePress"
+													class="sapUiTinyMarginStart"
+													tooltip="Delete Role"
+													type="Transparent"/>
+										</HBox>
+									</table:template>
+								</table:Column>
+							</table:columns>
+							
+						</table:Table>
+					</content>
+				</Panel>
+				
+				<!-- Role Details Panel -->
+				<Panel headerText="Role Details" 
+					   class="sapUiMediumMarginTop"
+					   visible="{= ${/selectedRole} !== null}">
+					<content>
+						<VBox visible="{= ${/selectedRole} !== null}">
+							<layout:Grid defaultSpan="XL6 L6 M6 S12" 
+										class="sapUiMediumMarginBottom">
+								
+								<VBox class="sapUiTinyMarginEnd">
+									<Label text="Role Name" class="sapUiTinyMarginBottom"/>
+									<Text text="{/selectedRole/name}" class="sapUiTinyMarginBottom"/>
+									
+									<Label text="Description" class="sapUiTinyMarginBottom"/>
+									<Text text="{/selectedRole/description}" class="sapUiTinyMarginBottom"/>
+									
+									<Label text="Functionality Access" class="sapUiTinyMarginBottom"/>
+									<Text text="{/selectedRole/functionalityAccess || 'N/A'}" class="sapUiTinyMarginBottom"/>
+								</VBox>
+								
+								<VBox class="sapUiTinyMarginStart">
+									<Label text="Write Restriction" class="sapUiTinyMarginBottom"/>
+									<Text text="{= ${/selectedRole/writeRestrictionDays} === null ? 'No Restriction' : ${/selectedRole/writeRestrictionDays} + ' days'}" 
+										  class="sapUiTinyMarginBottom"/>
+									
+									<Label text="Day Type Access" class="sapUiTinyMarginBottom"/>
+									<Text text="{= ${/selectedRole/dayTypeAccess}.join(', ') || 'N/A'}" class="sapUiTinyMarginBottom"/>
+									
+									<Label text="App Access" class="sapUiTinyMarginBottom"/>
+									<VBox items="{/selectedRole/appAccess}">
+										<items>
+											<Text text="{= ${appName} + ' (' + ${actions}.join('/') + ')'}" 
+												  class="sapUiTinyMarginBottom"/>
+										</items>
+									</VBox>
+								</VBox>
+								
+							</layout:Grid>
+							
+							<!-- Permissions -->
+							<Panel headerText="Permissions" class="sapUiMediumMarginTop">
+								<content>
+									<layout:Grid defaultSpan="XL4 L4 M6 S12" 
+												class="sapUiMediumMarginBottom">
+										<VBox items="{/selectedRole/permissions}">
+											<items>
+												<VBox class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+													<Label text="{attribute}" class="sapUiTinyMarginBottom"/>
+													<Text text="{= ${values}.join(', ')}" class="sapUiTinyMarginBottom"/>
+												</VBox>
+											</items>
+										</VBox>
+									</layout:Grid>
+								</content>
+							</Panel>
+						</VBox>
+					</content>
+				</Panel>
+				
+			</VBox>
+		</content>
+		
+	</Page>
+</mvc:View>

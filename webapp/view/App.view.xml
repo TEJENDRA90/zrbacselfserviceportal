@@ -1,0 +1,75 @@
+<mvc:View
+	controllerName="rbacselfserviceportal.zrbacselfserviceportal.controller.App"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	displayBlock="true">
+	
+	<App id="app">
+		<Page id="mainPage" showHeader="false">
+			<content>
+				<f:DynamicSideContent
+					id="DynamicSideContent"
+					sideContentVisible="true"
+					sideContentWidth="300px"
+					showSideContent="true">
+					
+					<f:mainContent>
+						<Page id="contentPage" showHeader="false">
+							<content>
+								<!-- Content will be loaded here via routing -->
+							</content>
+						</Page>
+					</f:mainContent>
+					
+					<f:sideContent>
+						<Page id="sidePage" showHeader="false" class="sapUiNoContentPadding">
+							<content>
+								<VBox class="sapUiMediumMargin">
+									<!-- Logo and Title -->
+									<HBox alignItems="Center" class="sapUiSmallMarginBottom">
+										<core:Icon src="sap-icon://home" size="2rem" color="#0073e6" class="sapUiTinyMarginEnd"/>
+										<Text text="Auth Portal" class="sapUiTinyMarginStart sapUiLargeFontSize sapUiTextBold"/>
+									</HBox>
+									
+									<!-- Navigation Menu -->
+									<NavContainer id="navContainer">
+										<Page id="navPage" showHeader="false">
+											<content>
+												<List id="navList" 
+													  items="{/navItems}" 
+													  class="sapUiNoMarginTop">
+													<items>
+														<CustomListItem type="Navigation" press="onNavItemPress">
+															<HBox alignItems="Center" class="sapUiTinyMargin">
+																<core:Icon src="{icon}" size="1.5rem" class="sapUiTinyMarginEnd"/>
+																<Text text="{title}" class="sapUiTinyMarginStart"/>
+															</HBox>
+														</CustomListItem>
+													</items>
+												</List>
+											</content>
+										</Page>
+									</NavContainer>
+									
+									<!-- Theme Switcher -->
+									<VBox class="sapUiMediumMarginTop">
+										<Button text="Switch Theme" 
+												icon="sap-icon://lightbulb" 
+												press="onThemeToggle"
+												class="sapUiTinyMarginBottom"/>
+										
+										<Text text="© 2025 VPP Auth Systems" 
+											  class="sapUiTinyFontSize sapUiTextColorNeutral"/>
+									</VBox>
+								</VBox>
+							</content>
+						</Page>
+					</f:sideContent>
+					
+				</f:DynamicSideContent>
+			</content>
+		</Page>
+	</App>
+</mvc:View>

@@ -1,0 +1,176 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "rbacselfserviceportal.zrbacselfserviceportal",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.40.12"
+		}
+	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+
+	"sap.ui5": {
+		"flexEnabled": false,
+		"rootView": {
+			"viewName": "rbacselfserviceportal.zrbacselfserviceportal.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "App"
+		},
+		"dependencies": {
+			"minUI5Version": "1.65.6",
+			"libs": {
+				"sap.ui.layout": {},
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.table": {},
+				"sap.ui.unified": {},
+				"sap.f": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "rbacselfserviceportal.zrbacselfserviceportal.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "rbacselfserviceportal.zrbacselfserviceportal.view",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"name": "dashboard",
+					"pattern": "",
+					"target": ["dashboard"]
+				},
+				{
+					"name": "roles",
+					"pattern": "roles",
+					"target": ["roles"]
+				},
+				{
+					"name": "roleEdit",
+					"pattern": "roles/:roleId",
+					"target": ["roleEdit"]
+				},
+				{
+					"name": "roleNew",
+					"pattern": "roles/new",
+					"target": ["roleEdit"]
+				},
+				{
+					"name": "assignments",
+					"pattern": "assignments",
+					"target": ["assignments"]
+				},
+				{
+					"name": "exceptions",
+					"pattern": "exceptions",
+					"target": ["exceptions"]
+				},
+				{
+					"name": "userRoles",
+					"pattern": "exceptions/:userId",
+					"target": ["userRoles"]
+				},
+				{
+					"name": "audit",
+					"pattern": "audit",
+					"target": ["audit"]
+				}
+			],
+			"targets": {
+				"dashboard": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Dashboard",
+					"viewName": "Dashboard"
+				},
+				"roles": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Roles",
+					"viewName": "Roles"
+				},
+				"roleEdit": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "RoleEdit",
+					"viewName": "RoleEdit"
+				},
+				"assignments": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Assignments",
+					"viewName": "Assignments"
+				},
+				"exceptions": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Exceptions",
+					"viewName": "Exceptions"
+				},
+				"userRoles": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "UserRoles",
+					"viewName": "UserRoles"
+				},
+				"audit": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Audit",
+					"viewName": "Audit"
+				}
+			}
+		}
+	}
+}
