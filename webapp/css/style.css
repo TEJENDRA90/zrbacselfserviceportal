@@ -1,1 +1,77 @@
-/* Enter your custom styles here */
+/* Custom styles for RBAC Self-Service Portal */
+
+/* Side Navigation customization */
+.sapTntSideNavigation {
+    background-color: #f5f5f5;
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Header styling */
+.sapTntSideNavigation .sapTntNavigationList:first-child .sapTntNavigationListItem {
+    background-color: #0073e6;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+/* Navigation items styling */
+.sapTntSideNavigation .sapTntNavigationListItem {
+    margin: 0.25rem 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.sapTntSideNavigation .sapTntNavigationListItem:hover {
+    background-color: #e8f4fd;
+}
+
+.sapTntSideNavigation .sapTntNavigationListItem.sapTntNavigationListItemSelected {
+    background-color: #0073e6;
+    color: white;
+}
+
+.sapTntSideNavigation .sapTntNavigationListItem.sapTntNavigationListItemSelected .sapTntNavigationListItemIcon {
+    color: white;
+}
+
+/* Footer styling */
+.sapTntSideNavigation .sapTntNavigationList:last-child .sapTntNavigationListItem {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* Theme switcher button styling */
+.sapTntSideNavigation .sapTntNavigationListItem[data-key="theme-toggle"] {
+    background-color: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.sapTntSideNavigation .sapTntNavigationListItem[data-key="theme-toggle"]:hover {
+    background-color: #e0e0e0;
+}
+
+/* Copyright text styling */
+.sapTntSideNavigation .sapTntNavigationListItem:last-child {
+    color: #666;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* Main content area styling */
+.sapTntToolPageMainContent {
+    background-color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sapTntSideNavigation {
+        width: 100%;
+    }
+}

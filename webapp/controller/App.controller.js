@@ -9,45 +9,35 @@ sap.ui.define([
 	return Controller.extend("rbacselfserviceportal.zrbacselfserviceportal.controller.App", {
 
 		onInit: function () {
-			// Initialize navigation items
-			this._initNavigationItems();
-			
 			// Set theme from localStorage or default to 'sap_horizon'
 			this._initTheme();
+			
+			// Set initial selection to dashboard
+			this._setInitialSelection();
 		},
 
-		_initNavigationItems: function () {
-			var navItems = [
-				{
-					title: "Dashboard",
-					icon: "sap-icon://home",
-					route: "dashboard"
-				},
-				{
-					title: "Role Management",
-					icon: "sap-icon://role",
-					route: "roles"
-				},
-				{
-					title: "Default Assignments",
-					icon: "sap-icon://rule",
-					route: "assignments"
-				},
-				{
-					title: "Exception Handling",
-					icon: "sap-icon://alert",
-					route: "exceptions"
-				},
-				{
-					title: "Audit Report",
-					icon: "sap-icon://document",
-					route: "audit"
-				}
-			];
+		_setInitialSelection: function () {
+			// Get the current route and set the appropriate navigation item as selected
+			var oRouter = this.getOwnerComponent().getRouter();
+			var sCurrentRoute = oRouter.getHashChanger().getHash();
+			
+			if (!sCurrentRoute || sCurrentRoute === "") {
+				// Default to dashboard
+				this._selectNavigationItem("dashboard");
+			} else {
+				// Extract route name from hash
+				var sRoute = sCurrentRoute.replace("#/", "");
+				this._selectNavigationItem(sRoute);
+			}
+		},
 
-			var oModel = new sap.ui.model.json.JSONModel();
-			oModel.setData({ navItems: navItems });
-			this.getView().setModel(oModel);
+		_selectNavigationItem: function (sKey) {
+			var oSideNavigation = this.getView().byId("sideNavigation");
+			var oItem = this.getView().byId(sKey + "Item");
+			
+			if (oItem) {
+				oSideNavigation.setSelectedItem(oItem);
+			}
 		},
 
 		_initTheme: function () {
@@ -55,14 +45,15 @@ sap.ui.define([
 			sap.ui.getCore().applyTheme(storedTheme);
 		},
 
-		onNavItemPress: function (oEvent) {
-			var oItem = oEvent.getSource();
-			var oContext = oItem.getBindingContext();
-			var oData = oContext.getObject();
+		onNavItemSelect: function (oEvent) {
+			var oItem = oEvent.getParameter("item");
+			var sKey = oItem.getKey();
 			
-			// Navigate to the selected route
-			var oRouter = this.getOwnerComponent().getRouter();
-			oRouter.navTo(oData.route);
+			if (sKey) {
+				// Navigate to the selected route
+				var oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo(sKey);
+			}
 		},
 
 		onThemeToggle: function () {
