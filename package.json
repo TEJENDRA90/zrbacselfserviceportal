@@ -6,7 +6,10 @@
     "@ui5/cli": "1.13.0",
     "@sap/ui5-builder-webide-extension": "1.0.x"
   },
+  "main": "webapp/index.html",
   "scripts": {
+    "start": "npx http-server webapp -p 8080 -o",
+    "dev": "npx http-server webapp -p 8080 -o --cors",
     "build": "ui5 build --clean-dest --include-task=generateManifestBundle generateCachebusterInfo"
   },
   "ui5": {
